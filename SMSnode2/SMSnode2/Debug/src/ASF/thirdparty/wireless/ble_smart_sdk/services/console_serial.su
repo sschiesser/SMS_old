@@ -1,0 +1,11 @@
+uart_serial.h:68:20:usart_serial_init	24	static
+uart_serial.h:88:32:usart_serial_putchar	16	static
+uart_serial.h:102:20:usart_serial_getchar	16	static
+stdio_serial.h:120:20:stdio_serial_init	24	static
+console_serial.c:18:13:uart_read_complete_callback	16	static
+console_serial.c:23:6:serial_console_init	8	static
+console_serial.c:43:6:_time_start	40	static
+console_serial.c:51:14:_time_done	8	static
+console_serial.c:56:5:getchar_b11_timeout	16	static
+console_serial.c:77:5:getchar_b11	8	static
+console_serial.c:91:6:getchar_aysnc	16	static

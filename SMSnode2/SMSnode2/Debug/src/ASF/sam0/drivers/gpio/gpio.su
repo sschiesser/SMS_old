@@ -1,0 +1,15 @@
+core_cm0.h:596:22:NVIC_ClearPendingIRQ	16	static
+gpio.c:68:6:gpio_get_config_defaults	16	static
+gpio.c:99:18:gpio_pin_set_config	24	static
+gpio.c:183:6:gpio_pin_get_input_level	24	static
+gpio.c:208:6:gpio_pin_get_output_level	24	static
+gpio.c:231:6:gpio_pin_set_output_level	16	static
+gpio.c:255:6:gpio_pin_toggle_output_level	16	static
+gpio.c:273:6:gpio_pinmux_cofiguration	32	static
+gpio.c:332:6:gpio_register_callback	32	static
+gpio.c:386:6:gpio_unregister_callback	32	static
+gpio.c:416:6:gpio_enable_callback	32	static
+gpio.c:441:6:gpio_disable_callback	32	static
+gpio.c:464:13:gpio_port0_isr_handler	16	static
+gpio.c:487:13:gpio_port1_isr_handler	16	static
+gpio.c:516:6:gpio_init	16	static

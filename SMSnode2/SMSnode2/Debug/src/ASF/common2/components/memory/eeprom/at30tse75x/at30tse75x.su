@@ -1,0 +1,10 @@
+i2c_common.h:306:20:i2c_wait_for_idle	16	static
+i2c_common.h:321:20:i2c_enable	16	static
+at30tse75x.c:59:6:at30tse_init	32	static
+at30tse75x.c:84:6:at30tse_eeprom_write	56	static
+at30tse75x.c:116:6:at30tse_eeprom_read	48	static
+at30tse75x.c:149:6:at30tse_set_register_pointer	32	static
+at30tse75x.c:170:10:at30tse_read_register	48	static
+at30tse75x.c:203:6:at30tse_write_register	40	static
+at30tse75x.c:225:6:at30tse_write_config_register	24	static
+at30tse75x.c:241:8:at30tse_read_temperature	40	static

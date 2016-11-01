@@ -1,0 +1,17 @@
+core_cm0.h:544:22:NVIC_EnableIRQ	16	static
+core_cm0.h:556:22:NVIC_DisableIRQ	16	static
+platform_drv.c:121:6:init_port_list	16	static
+platform_drv.c:137:6:init_clock	16	static
+platform_drv.c:183:16:platform_driver_init	16	static
+platform_drv.c:318:16:platform_register_ble_msg_handler	24	static
+platform_drv.c:331:13:at_ke_msg_send	24	static
+platform_drv.c:358:6:platform_interface_send	40	static
+platform_drv.c:387:6:send_plf_int_msg_ind	32	static
+platform_drv.c:431:12:NMI_MsgQueueDestroyOnKeID	32	static
+platform_drv.c:474:13:platform_start_event_timeout	32	static
+platform_drv.c:498:13:platform_stop_event_timeout	24	static
+platform_drv.c:522:16:platform_event_wait	40	static
+platform_drv.c:610:16:acquire_sleep_lock	16	static
+platform_drv.c:637:16:release_sleep_lock	16	static
+platform_drv.c:644:6:samb11_plf_resume_callback	8	static
+platform_drv.c:655:16:register_resume_callback	24	static

@@ -1,0 +1,12 @@
+dualtimer.c:60:6:dualtimer_get_config_defaults	16	static
+dualtimer.c:91:10:dualtimer_get_value	16	static
+dualtimer.c:107:6:dualtimer_set_counter	16	static
+dualtimer.c:132:9:dualtimer_get_status	16	static
+dualtimer.c:148:9:dualtimer_get_interrupt_status	16	static
+dualtimer.c:164:6:dualtimer_clear_interrupt_status	16	static
+dualtimer.c:180:6:dualtimer_enable	16	static
+dualtimer.c:196:6:dualtimer_disable	16	static
+dualtimer.c:211:13:dualtimer_isr_handler	8	static
+dualtimer.c:235:6:dualtimer_init	24	static
+dualtimer.c:299:6:dualtimer_register_callback	16	static
+dualtimer.c:314:6:dualtimer_unregister_callback	16	static

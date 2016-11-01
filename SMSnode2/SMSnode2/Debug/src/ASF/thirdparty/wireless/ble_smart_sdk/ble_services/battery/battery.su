@@ -1,0 +1,4 @@
+battery.c:70:6:bat_init_service	16	static
+battery.c:117:17:bat_primary_service_define	32	static
+battery.c:127:17:bat_update_char_value	40	static
+battery.c:154:17:bat_char_changed_event	560	static

@@ -1,0 +1,2 @@
+sms_ble.c:10:17:sms_service_advertise	40	static
+sms_ble.c:31:17:sms_data_pack	24	static

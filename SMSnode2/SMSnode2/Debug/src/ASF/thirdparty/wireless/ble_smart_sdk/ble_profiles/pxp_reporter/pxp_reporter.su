@@ -1,0 +1,10 @@
+pxp_reporter.c:137:6:pxp_service_init	8	static
+pxp_reporter.c:152:6:register_pathloss_handler	16	static
+pxp_reporter.c:160:6:register_linkloss_handler	16	static
+pxp_reporter.c:165:6:register_state_handler	16	static
+pxp_reporter.c:173:17:pxp_service_define	8	static
+pxp_reporter.c:218:17:pxp_reporter_char_changed_handler	552	static
+pxp_reporter.c:248:17:pxp_reporter_connected_state_handler	32	static
+pxp_reporter.c:272:17:pxp_reporter_disconnect_event_handler	48	static
+pxp_reporter.c:298:6:pxp_reporter_adv	32	static
+pxp_reporter.c:324:6:pxp_reporter_init	16	static

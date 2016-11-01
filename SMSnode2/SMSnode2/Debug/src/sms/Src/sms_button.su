@@ -1,0 +1,8 @@
+sms_button.c:33:6:sms_button_configure_gpio	16	static
+sms_button.c:65:6:sms_button_register_callbacks	8	static
+sms_button.c:77:6:sms_button_bt1_callback	16	static
+sms_button.c:85:6:sms_button_bt2_callback	16	static
+sms_button.c:96:6:sms_button_bt1_fn	24	static
+sms_button.c:136:6:sms_button_bt2_fn	8	static
+sms_button.c:175:6:sms_button_service_init	16	static
+sms_button.c:229:17:sms_button_primary_service_define	32	static

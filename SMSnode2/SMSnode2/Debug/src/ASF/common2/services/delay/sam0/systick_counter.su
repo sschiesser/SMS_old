@@ -1,0 +1,4 @@
+systick_counter.h:68:20:delay_cycles	16	static
+systick_counter.c:61:6:delay_init	8	static
+systick_counter.c:75:6:delay_cycles_us	16	static
+systick_counter.c:88:6:delay_cycles_ms	16	static

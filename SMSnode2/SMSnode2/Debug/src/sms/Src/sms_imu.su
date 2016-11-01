@@ -1,0 +1,12 @@
+i2c_common.h:306:20:i2c_wait_for_idle	16	static
+i2c_common.h:337:20:i2c_disable	16	static
+sms_imu.c:17:6:sms_imu_configure_gpio	16	static
+sms_imu.c:40:6:sms_imu_register_callbacks	8	static
+sms_imu.c:47:6:sms_imu_unregister_callbacks	8	static
+sms_imu.c:53:6:sms_imu_interrupt_callback	16	static
+sms_imu.c:63:6:sms_imu_startup	8	static
+sms_imu.c:80:5:sms_imu_initialize	16	static
+sms_imu.c:100:5:sms_imu_configure	16	static
+sms_imu.c:141:5:sms_imu_poll_data	80	static
+sms_imu.c:200:6:sms_imu_service_init	16	static
+sms_imu.c:250:17:sms_imu_primary_service_define	32	static

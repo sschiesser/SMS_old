@@ -1,0 +1,11 @@
+timer.c:63:6:timer_get_config_defaults	16	static
+timer.c:75:10:timer_get_value	8	static
+timer.c:85:6:timer_set_value	16	static
+timer.c:95:10:timer_get_interrupt_status	8	static
+timer.c:105:6:timer_clear_interrupt_status	8	static
+timer.c:117:6:timer_enable	8	static
+timer.c:127:6:timer_disable	8	static
+timer.c:139:6:timer_register_callback	16	static
+timer.c:150:6:timer_unregister_callback	8	static
+timer.c:161:13:timer_isr_handler	8	static
+timer.c:182:6:timer_init	16	static

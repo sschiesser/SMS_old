@@ -1,0 +1,9 @@
+i2c_common.h:306:20:i2c_wait_for_idle	16	static
+i2c_common.h:321:20:i2c_enable	16	static
+i2c_master_interrupt.h:88:20:i2c_master_enable_callback	16	static
+sms_i2c.c:10:6:i2c_master_configure	32	static
+sms_i2c.c:34:6:i2c_master_write_callback	8	static
+sms_i2c.c:39:6:i2c_master_read_callback	8	static
+sms_i2c.c:44:6:i2c_master_configure_callbacks	8	static
+sms_i2c.c:57:5:i2c_master_write	32	static
+sms_i2c.c:69:5:i2c_master_read	32	static

@@ -1,0 +1,2 @@
+system_samb11.c:60:6:SystemInit	8	static
+system_samb11.c:73:6:SystemCoreClockUpdate	8	static

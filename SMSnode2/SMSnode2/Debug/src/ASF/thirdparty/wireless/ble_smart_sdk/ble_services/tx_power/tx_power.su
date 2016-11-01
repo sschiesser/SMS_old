@@ -1,0 +1,2 @@
+tx_power.c:71:6:init_tx_power_service	16	static
+tx_power.c:139:17:txps_primary_service_define	32	static

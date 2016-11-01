@@ -1,0 +1,4 @@
+event_handler.c:34:6:platform_event_free	16	static
+event_handler.c:40:6:platform_event_post	24	static
+event_handler.c:72:16:platform_event_get	40	static
+event_handler.c:96:6:platform_event_init	16	static

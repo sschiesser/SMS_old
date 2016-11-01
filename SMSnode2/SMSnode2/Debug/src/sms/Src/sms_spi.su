@@ -1,0 +1,4 @@
+sms_spi.c:19:6:spi_master_configure	56	static
+sms_spi.c:51:6:spi_master_transceived_callback	16	static
+sms_spi.c:60:6:spi_master_configure_callbacks	8	static
+sms_spi.c:78:5:spi_master_transceive	40	static

@@ -1,0 +1,17 @@
+core_cm0.h:544:22:NVIC_EnableIRQ	16	static
+i2c_common.h:306:20:i2c_wait_for_idle	16	static
+i2c_common.h:337:20:i2c_disable	16	static
+i2c_master.c:66:6:i2c_master_get_config_defaults	16	static
+i2c_master.c:88:13:_i2c_master_set_config	24	static
+i2c_master.c:126:18:i2c_master_init	24	static
+i2c_master.c:196:25:_i2c_master_read_packet	32	static
+i2c_master.c:262:18:i2c_master_read_packet_wait	16	static
+i2c_master.c:308:18:i2c_master_read_packet_wait_no_stop	16	static
+i2c_master.c:342:25:_i2c_master_write_packet	32	static
+i2c_master.c:406:18:i2c_master_write_packet_wait	16	static
+i2c_master.c:451:18:i2c_master_write_packet_wait_no_stop	16	static
+i2c_master.c:487:6:i2c_master_send_stop	24	static
+i2c_master.c:513:6:i2c_master_send_start	24	static
+i2c_master.c:532:18:i2c_master_read_byte	24	static
+i2c_master.c:556:18:i2c_master_write_address	24	static
+i2c_master.c:582:18:i2c_master_write_byte	24	static

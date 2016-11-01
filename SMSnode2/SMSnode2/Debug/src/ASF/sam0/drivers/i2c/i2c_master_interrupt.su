@@ -1,0 +1,13 @@
+core_cm0.h:596:22:NVIC_ClearPendingIRQ	16	static
+i2c_common.h:306:20:i2c_wait_for_idle	16	static
+i2c_master_interrupt.c:57:13:_i2c_master_read	24	static
+i2c_master_interrupt.c:81:13:_i2c_master_write	24	static
+i2c_master_interrupt.c:117:6:i2c_master_register_callback	24	static
+i2c_master_interrupt.c:143:6:i2c_master_unregister_callback	16	static
+i2c_master_interrupt.c:169:25:_i2c_master_read_packet	24	static
+i2c_master_interrupt.c:213:18:i2c_master_read_packet_job	16	static
+i2c_master_interrupt.c:251:18:i2c_master_read_packet_job_no_stop	16	static
+i2c_master_interrupt.c:282:25:_i2c_master_write_packet	24	static
+i2c_master_interrupt.c:323:18:i2c_master_write_packet_job	16	static
+i2c_master_interrupt.c:361:18:i2c_master_write_packet_job_no_stop	16	static
+i2c_master_interrupt.c:384:6:_i2c_master_isr_handler	24	static

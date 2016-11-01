@@ -1,0 +1,9 @@
+syscalls.c:70:16:_sbrk	24	static
+syscalls.c:85:12:link	16	static
+syscalls.c:90:12:_close	16	static
+syscalls.c:95:12:_fstat	16	static
+syscalls.c:102:12:_isatty	16	static
+syscalls.c:107:12:_lseek	24	static
+syscalls.c:112:13:_exit	16	static
+syscalls.c:119:13:_kill	16	static
+syscalls.c:124:12:_getpid	8	static
