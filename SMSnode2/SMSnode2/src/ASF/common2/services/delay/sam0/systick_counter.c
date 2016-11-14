@@ -75,7 +75,7 @@ void delay_init(void)
 void delay_cycles_us(uint32_t n)
 {
 	while (n--) {
-		/* Devide up to blocks of 10u */
+		/* Divide up to blocks of 10u */
 		delay_cycles(cycles_per_us);
 	}
 }
@@ -88,7 +88,7 @@ void delay_cycles_us(uint32_t n)
 void delay_cycles_ms(uint32_t n)
 {
 	while (n--) {
-		/* Devide up to blocks of 1ms */
+		/* Divide up to blocks of 1ms */
 		delay_cycles(cycles_per_ms);
 	}
 }

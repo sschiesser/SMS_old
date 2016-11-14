@@ -373,7 +373,10 @@ int main(void)
     /* Register user-defined callback */
     register_ble_user_event_cb(sms_plf_event_cb);
     
-    sms_service_advertise();
+    sms_imu_startup();
+    DBG_LOG_CONT(" done!");
+    while(1){}
+    //sms_service_advertise();
     
     while(true)
     {

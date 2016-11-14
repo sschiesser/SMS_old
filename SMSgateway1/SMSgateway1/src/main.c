@@ -393,9 +393,26 @@ static at_ble_status_t sms_gateway_indication_received(void *param)
     gpio_pin_set_output_level(dbg_gpio_pin, true);
 
     at_ble_indication_recieved_t *indication = (at_ble_indication_recieved_t *)param;
-    static uint16_t sms_ind_cnt = 0;
-    sms_ind_cnt++;
-    DBG_LOG_DEV("Indication counter: %d", sms_ind_cnt);
+    static uint16_t btn_ind_cnt = 0;
+    static uint16_t press_ind_cnt = 0;
+    static uint16_t imu_ind_cnt = 0;
+    switch(indication->char_len) {
+        case 1:
+        DBG_LOG_DEV("BTN %d", btn_ind_cnt++);
+        break;
+        
+        case 8:
+        DBG_LOG_DEV("\t\tPRESS %d", press_ind_cnt++);
+        break;
+        
+        case 12:
+        DBG_LOG_DEV("\t\t\t\tIMU %d", imu_ind_cnt++);
+        break;
+        
+        default:
+        break;
+    }    
+    //DBG_LOG_DEV("Indication counter: %d... len: %d", sms_ind_cnt, indication->char_len);
     //DBG_LOG_DEV("Indication received...\r\n- conn handle: 0x%04x\r\n- char handle: 0x%04x\r\n- char len: %d", indication->conn_handle, indication->char_handle, indication->char_len);
     //for(uint8_t i = 0; i < indication->char_len; i++) {
         //DBG_LOG_CONT_DEV("\r\n- char value[%d]: 0x%02x", i, indication->char_value[i]);
