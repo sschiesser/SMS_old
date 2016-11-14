@@ -398,15 +398,21 @@ static at_ble_status_t sms_gateway_indication_received(void *param)
     static uint16_t imu_ind_cnt = 0;
     switch(indication->char_len) {
         case 1:
-        DBG_LOG_DEV("BTN %d", btn_ind_cnt++);
+        DBG_LOG_DEV("BTN %d: 0x%02x", btn_ind_cnt++, indication->char_value[0]);
         break;
         
         case 8:
-        DBG_LOG_DEV("\t\tPRESS %d", press_ind_cnt++);
+        DBG_LOG_DEV("\t\tPRESS %d: 0x", press_ind_cnt++);
+        for(uint8_t i = 0; i < 8; i++) {
+            DBG_LOG_CONT_DEV("%02x", indication->char_value[i]);
+        }
         break;
         
         case 12:
-        DBG_LOG_DEV("\t\t\t\tIMU %d", imu_ind_cnt++);
+        DBG_LOG_DEV("\t\t\t\tIMU %d: 0x", imu_ind_cnt++);
+        for(uint8_t i = 0; i < 12; i++) {
+            DBG_LOG_CONT_DEV("%02x", indication->char_value[i]);
+        }
         break;
         
         default:
