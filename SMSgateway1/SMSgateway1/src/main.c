@@ -264,6 +264,21 @@ static at_ble_status_t ble_paired_app_event(void *params)
     at_ble_status_t discovery_status = AT_BLE_FAILURE;
     at_ble_pair_done_t *pair_done_val;
     pair_done_val = (at_ble_pair_done_t *)params;
+	
+	if(periph_counter == 0xff) {
+		periph_counter = 0;
+		DBG_LOG_DEV("Registering first peripheral");
+	}
+	else if((periph_counter + 1) >= SMS_BLE_PERIPHERAL_MAX) {
+		DBG_LOG_DEV("Maximum amount of peripherals reached!");
+		return AT_BLE_ATT_INSUFF_RESOURCE;
+	}
+	else {
+		periph_counter += 1;
+		DBG_LOG_DEV("Increasing peripheral counter: %d", periph_counter);
+	}
+	periph_instance[periph_counter].id = periph_counter;
+	periph_instance[periph_counter].conn_handle = pair_done_val->handle;
 
     discovery_status = sms_gateway_discover_services(pair_done_val->handle);
     //discovery_status = sms_gateway_discover_characteristics(pair_done_val->handle);
@@ -307,16 +322,46 @@ static const ble_event_callback_t sms_gateway_app_gap_cb[] = {
 /* Callback registered for AT_BLE_PRIMARY_SERVICE_FOUND (#19) event from stack */
 static at_ble_status_t sms_gateway_service_found(void *params)
 {
+	uint16_t comp_val = 0;
     DBG_LOG_DEV("Primary service found");
     at_ble_primary_service_found_t *service = (at_ble_primary_service_found_t *)params;
     DBG_LOG_DEV("[sms_gateway_service_found]  service characteristics:");
     DBG_LOG_DEV("  service type: %d", service->service_uuid.type);
     DBG_LOG_DEV("  service uuid: 0x");
     for(uint8_t i = 0; i < AT_BLE_UUID_128_LEN; i++) {
-        DBG_LOG_CONT_DEV("%x", service->service_uuid.uuid[i]);
+        DBG_LOG_CONT_DEV("%02x", service->service_uuid.uuid[i]);
+		if(i == 6) {
+			comp_val = service->service_uuid.uuid[i];
+			comp_val = (comp_val << 8) & 0xff00;
+			//DBG_LOG_DEV("Comp val: 0x%04x", comp_val);
+		}
+		else if(i == 7) {
+			comp_val |= service->service_uuid.uuid[i];
+			//DBG_LOG_DEV("Comp val: 0x%04x", comp_val);
+		}
     }
+	DBG_LOG_DEV("  comp val: 0x%04x", comp_val);
     DBG_LOG_DEV("  start handle: %d", service->start_handle);
     DBG_LOG_DEV("  end handle: %d", service->end_handle);
+	
+	if(comp_val == 0xbbbb) {
+		DBG_LOG_DEV("  button service!");
+		periph_instance[periph_counter].available_services[SMS_BLE_SERV_BUTTON_POS] = true;
+		periph_instance[periph_counter].service_handle_range[SMS_BLE_SERV_BUTTON_POS][0] = service->start_handle;
+		periph_instance[periph_counter].service_handle_range[SMS_BLE_SERV_BUTTON_POS][1] = service->end_handle;
+	}
+	else if(comp_val == 0xeeee) {
+		DBG_LOG_DEV("  pressure service!");
+		periph_instance[periph_counter].available_services[SMS_BLE_SERV_PRESSURE_POS] = true;
+		periph_instance[periph_counter].service_handle_range[SMS_BLE_SERV_PRESSURE_POS][0] = service->start_handle;
+		periph_instance[periph_counter].service_handle_range[SMS_BLE_SERV_PRESSURE_POS][1] = service->end_handle;
+	}
+	else if(comp_val == 0x1111) {
+		DBG_LOG_DEV("  mpu service!");
+		periph_instance[periph_counter].available_services[SMS_BLE_SERV_MPU_POS] = true;
+		periph_instance[periph_counter].service_handle_range[SMS_BLE_SERV_MPU_POS][0] = service->start_handle;
+		periph_instance[periph_counter].service_handle_range[SMS_BLE_SERV_MPU_POS][1] = service->end_handle;
+	}
     return AT_BLE_SUCCESS;
 }
 
@@ -339,7 +384,16 @@ static at_ble_status_t sms_gateway_descr_found(void *params)
 /* Callback registered for AT_BLE_DISCOVERY_COMPLETE (#23) event from stack */
 static at_ble_status_t sms_gateway_discovery_complete(void *params)
 {
-    DBG_LOG("Discovery complete");
+    DBG_LOG("Discovery complete...");
+	for(uint8_t i = 0; i < SMS_BLE_PERIPHERAL_MAX; i++) {
+		DBG_LOG_DEV("Peripheral #%d", i);
+		DBG_LOG_DEV(" - id %d", periph_instance[i].id);
+		DBG_LOG_DEV(" - conn handle 0x%04x", periph_instance[i].conn_handle);
+		for(uint8_t j = 0; j < SMS_BLE_SERVICE_MAX; j++) {
+			DBG_LOG_DEV(" - service%d: %d", j, periph_instance[i].available_services[j]);
+			DBG_LOG_DEV(" - char range: %d - %d", periph_instance[i].service_handle_range[j][0], periph_instance[i].service_handle_range[j][1]);
+		}
+	}
     UNUSED(params);
     return AT_BLE_SUCCESS;
 }
@@ -381,6 +435,27 @@ static at_ble_status_t sms_gateway_notification_received(void *params)
     for(uint8_t i = 0; i < notification->char_len; i++) {
         DBG_LOG_CONT_DEV("%02x", notification->char_value[i]);
     }
+	
+	for(uint8_t i = 0; i < SMS_BLE_PERIPHERAL_MAX; i++) {
+		if(periph_instance[i].conn_handle == notification->conn_handle) {
+			spi_message.periph_id = periph_instance[i].id;
+			for(uint8_t j = 0; j < SMS_BLE_SERVICE_MAX; j++) {
+				if((notification->char_handle > periph_instance[i].service_handle_range[j][0]) && (notification->char_handle < periph_instance[i].service_handle_range[j][1])) {
+					spi_message.service = j;
+					spi_message.length = notification->char_len;
+					DBG_LOG_DEV("Peripheral %d, service %d, length %d", spi_message.periph_id, spi_message.service, spi_message.length);
+					DBG_LOG_DEV("Data 0x");
+					for(uint8_t k = 0; k < spi_message.length; k++) {
+						spi_message.data[k] = notification->char_value[k];
+						DBG_LOG_CONT_DEV("%02x ", spi_message.data[k]);
+						spi_send = true;
+					}
+					break;
+				}
+			}
+		}
+	}
+	
 
     gpio_pin_set_output_level(dbg_gpio_pin, false);
 
@@ -584,6 +659,16 @@ int main(void)
     register_hw_timer_start_func_cb((hw_timer_start_func_cb_t)hw_timer_start);
     register_hw_timer_stop_func_cb(hw_timer_stop);
     
+	periph_counter = 0xFF;
+	for(uint8_t i = 0; i < SMS_BLE_PERIPHERAL_MAX; i++) {
+		periph_instance[i].id = 0xff;
+		periph_instance[i].conn_handle = 0xffff;
+		for(uint8_t j = 0; j < SMS_BLE_SERVICE_MAX; j++) {
+			periph_instance[i].available_services[j] = false;
+			periph_instance[i].service_handle_range[j][0] = 0xff;
+			periph_instance[i].service_handle_range[j][1] = 0x00;
+		}
+	}
     
     while(true)
     {

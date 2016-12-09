@@ -58,6 +58,19 @@
 #define SMS_ID_PATTERN1                     "SABRe-SMS"
 #define SMS_ID_PATTERN2                     "\x1C\x57\x2d\x5A\xBE\x2d\x53\x50"
 
+#define SMS_BLE_SERV_BUTTON_POS				0
+#define SMS_BLE_SERV_PRESSURE_POS			1
+#define SMS_BLE_SERV_MPU_POS				2
+#define SMS_BLE_SERVICE_MAX					3
+
+#define SMS_BLE_CHAR_BTN0_POS				0
+#define SMS_BLE_CHAR_BNT1_POS				0
+#define SMS_BLE_CHAR_PRESS_POS				1
+#define SMS_BLE_CHAR_MPU_POS				2
+#define SMS_BLE_CHARS_MAX					4
+
+#define SMS_BLE_PERIPHERAL_MAX				BLE_MAX_DEVICE_CONNECTED
+
 typedef enum {
 	SMS_DEV_UNCONNECTED,
 	SMS_DEV_CONNECTING,
@@ -76,8 +89,40 @@ typedef enum sms_state {
     SMS_INT_TIMER1,
     SMS_INT_TIMER2
 }sms_state_t;
-
 volatile sms_state_t app_state;
+
+struct sms_spi_message {
+	uint8_t periph_id;
+	uint8_t service;
+	uint8_t length;
+	uint8_t data[64];
+};
+struct sms_spi_message spi_message;
+bool spi_send;
+
+//enum sms_ble_serv_type {
+	//BLE_SERV_DISABLED = 0x00,
+	//BLE_SERV_BUTTON,
+	//BLE_SERV_PRESSURE,
+	//BLE_SERV_MPU
+//};
+//
+//enum sms_ble_char_type {
+	//BLE_CHAR_DISABLED = 0x00,
+	//BLE_CHAR_BTN0,
+	//BLE_CHAR_BTN1,
+	//BLE_CHAR_PRESS,
+	//BLE_CHAR_MPU
+//};
+typedef struct sms_periph {
+	uint8_t id;
+	uint16_t conn_handle;
+	bool available_services[SMS_BLE_SERVICE_MAX];
+	//bool available_chars[SMS_BLE_CHARS_MAX];
+	uint16_t service_handle_range[SMS_BLE_SERVICE_MAX][2];
+}sms_periph_t;
+sms_periph_t periph_instance[SMS_BLE_PERIPHERAL_MAX];
+uint8_t periph_counter;
 
 typedef struct gatt_smsb_char_handler
 {
