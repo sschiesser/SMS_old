@@ -16,6 +16,8 @@ src\ASF\sam0\drivers\i2c\i2c_master.c
 
 src\ASF\sam0\drivers\i2c\i2c_master_interrupt.c
 
+src\ASF\sam0\drivers\spi\spi.c
+
 src\ASF\sam0\drivers\system\system_sam_b.c
 
 src\ASF\sam0\drivers\timer\timer.c

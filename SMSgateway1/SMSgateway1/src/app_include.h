@@ -71,6 +71,8 @@
 
 #define SMS_BLE_PERIPHERAL_MAX				BLE_MAX_DEVICE_CONNECTED
 
+#define SPI_BUF_LENGTH						64
+
 typedef enum {
 	SMS_DEV_UNCONNECTED,
 	SMS_DEV_CONNECTING,
@@ -95,10 +97,12 @@ struct sms_spi_message {
 	uint8_t periph_id;
 	uint8_t service;
 	uint8_t length;
-	uint8_t data[64];
+	uint8_t data[61];
 };
 struct sms_spi_message spi_message;
 bool spi_send;
+struct spi_slave_inst spi_slave;
+struct spi_module spi_master_instance;
 
 //enum sms_ble_serv_type {
 	//BLE_SERV_DISABLED = 0x00,

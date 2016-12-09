@@ -31,12 +31,14 @@
       <framework-data>
         <options>
           <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.drivers.dualtimer" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.drivers.timer" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.ble_smart_sdk.ble_profiles.pxp_monitor" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.ble_smart_sdk.ble_services.immediate_alert" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.ble_smart_sdk.ble_services.link_loss" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.ble_smart_sdk.ble_services.tx_power" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.dualtimer" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.timer" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.drivers.spi" value="Add" config="polled" content-id="Atmel.ASF" />
+          <option id="sam0.drivers.uart" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.utils" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam0.utils.cmsis.samb11.source.template" value="Add" config="" content-id="Atmel.ASF" />
         </options>
@@ -197,6 +199,11 @@
           <file path="src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/tx_power/tx_power.h" framework="" version="3.30.1" source="thirdparty\wireless\ble_smart_sdk\ble_services\tx_power\tx_power.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/ble_smart_sdk/ble_profiles/pxp_monitor/pxp_monitor.c" framework="" version="3.30.1" source="thirdparty\wireless\ble_smart_sdk\ble_profiles\pxp_monitor\pxp_monitor.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/ble_smart_sdk/ble_profiles/pxp_monitor/pxp_monitor.h" framework="" version="3.30.1" source="thirdparty\wireless\ble_smart_sdk\ble_profiles\pxp_monitor\pxp_monitor.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/spi/spi.c" framework="" version="3.30.1" source="sam0\drivers\spi\spi.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/spi/quick_start_slave/qs_spi_slave_basic.h" framework="" version="3.30.1" source="sam0\drivers\spi\quick_start_slave\qs_spi_slave_basic.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/spi/spi.h" framework="" version="3.30.1" source="sam0\drivers\spi\spi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/spi/quick_start_master/qs_spi_master_basic.h" framework="" version="3.30.1" source="sam0\drivers\spi\quick_start_master\qs_spi_master_basic.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/Config/conf_spi.h" framework="" version="3.30.1" source="sam0\drivers\spi\module_config\conf_spi.h" changed="False" content-id="Atmel.ASF" />
         </files>
         <documentation help="http://asf.atmel.com/docs/3.30.1/thirdparty.wireless.ble_smart_sdk.apps.startup_template.samb11_xplained_pro/html/index.html" />
         <offline-documentation help="" />
@@ -249,6 +256,7 @@
       <Value>SABRE_DEVICE</Value>
       <Value>NDEBUG</Value>
       <Value>BLE_DEVICE_ROLE=BLE_ROLE_ALL</Value>
+      <Value>SPI_CALLBACK_MODE=false</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
@@ -286,6 +294,7 @@
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/link_loss</Value>
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/tx_power</Value>
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_profiles/pxp_monitor</Value>
+      <Value>../src/ASF/sam0/drivers/spi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -310,7 +319,13 @@
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
   <armgcc.linker.memorysettings.ExternalRAM>False</armgcc.linker.memorysettings.ExternalRAM>
   <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=app_entry -Wl,--cref -mthumb -T../src/ASF/sam0/utils/linker_scripts/samb11/gcc/samb11g18a_sram.ld</armgcc.linker.miscellaneous.LinkerFlags>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBLE_DEVICE_ROLE=BLE_ROLE_ALL -DBOARD=SAMB11_XPLAINED_PRO -DCHIPVERSION_B0 -DI2C_MASTER_CALLBACK_MODE=true -D__SAMB11G18A__ -DIMMEDIATE_ALERT_SERVICE -DLINK_LOSS_SERVICE -DTX_POWER_SERVICE -DPROXIMITY_MONITOR -DTXPS_GATT_CLIENT -DLLS_GATT_CLIENT -DIAS_GATT_CLIENT</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>../src/Config</Value>
+      <Value>../src/ASF/sam0/drivers/spi</Value>
+    </ListValues>
+  </armgcc.assembler.general.IncludePaths>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBLE_DEVICE_ROLE=BLE_ROLE_ALL -DBOARD=SAMB11_XPLAINED_PRO -DCHIPVERSION_B0 -DI2C_MASTER_CALLBACK_MODE=true -D__SAMB11G18A__ -DIMMEDIATE_ALERT_SERVICE -DLINK_LOSS_SERVICE -DTX_POWER_SERVICE -DPROXIMITY_MONITOR -DTXPS_GATT_CLIENT -DLLS_GATT_CLIENT -DIAS_GATT_CLIENT -DSPI_CALLBACK_MODE=false</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>../thirdparty/wireless/ble_smart_sdk/services</Value>
@@ -346,6 +361,7 @@
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/link_loss</Value>
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/tx_power</Value>
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_profiles/pxp_monitor</Value>
+      <Value>../src/ASF/sam0/drivers/spi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -377,6 +393,7 @@
       <Value>SABRE_DEVICE</Value>
       <Value>DEBUG</Value>
       <Value>BLE_DEVICE_ROLE=BLE_ROLE_CENTRAL</Value>
+      <Value>SPI_CALLBACK_MODE=false</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
@@ -414,6 +431,7 @@
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/link_loss</Value>
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/tx_power</Value>
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_profiles/pxp_monitor</Value>
+      <Value>../src/ASF/sam0/drivers/spi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -439,8 +457,14 @@
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
   <armgcc.linker.memorysettings.ExternalRAM />
   <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=app_entry -Wl,--cref -mthumb -T../src/ASF/sam0/utils/linker_scripts/samb11/gcc/samb11g18a_sram.ld</armgcc.linker.miscellaneous.LinkerFlags>
+  <armgcc.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>../src/Config</Value>
+      <Value>../src/ASF/sam0/drivers/spi</Value>
+    </ListValues>
+  </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBLE_DEVICE_ROLE=BLE_ROLE_ALL -DBOARD=SAMB11_XPLAINED_PRO -DCHIPVERSION_B0 -DI2C_MASTER_CALLBACK_MODE=true -D__SAMB11G18A__ -DIMMEDIATE_ALERT_SERVICE -DLINK_LOSS_SERVICE -DTX_POWER_SERVICE -DPROXIMITY_MONITOR -DTXPS_GATT_CLIENT -DLLS_GATT_CLIENT -DIAS_GATT_CLIENT</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBLE_DEVICE_ROLE=BLE_ROLE_ALL -DBOARD=SAMB11_XPLAINED_PRO -DCHIPVERSION_B0 -DI2C_MASTER_CALLBACK_MODE=true -D__SAMB11G18A__ -DIMMEDIATE_ALERT_SERVICE -DLINK_LOSS_SERVICE -DTX_POWER_SERVICE -DPROXIMITY_MONITOR -DTXPS_GATT_CLIENT -DLLS_GATT_CLIENT -DIAS_GATT_CLIENT -DSPI_CALLBACK_MODE=false</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
       <Value>../thirdparty/wireless/ble_smart_sdk/services</Value>
@@ -476,6 +500,7 @@
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/link_loss</Value>
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_services/tx_power</Value>
       <Value>../src/ASF/thirdparty/wireless/ble_smart_sdk/ble_profiles/pxp_monitor</Value>
+      <Value>../src/ASF/sam0/drivers/spi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -538,6 +563,9 @@
     <Folder Include="src\ASF\sam0\drivers\i2c\" />
     <Folder Include="src\ASF\sam0\drivers\i2c\quick_start_master\" />
     <Folder Include="src\ASF\sam0\drivers\i2c\quick_start_master_callback\" />
+    <Folder Include="src\ASF\sam0\drivers\spi\" />
+    <Folder Include="src\ASF\sam0\drivers\spi\quick_start_master\" />
+    <Folder Include="src\ASF\sam0\drivers\spi\quick_start_slave\" />
     <Folder Include="src\ASF\sam0\drivers\system\" />
     <Folder Include="src\ASF\sam0\drivers\timer\" />
     <Folder Include="src\ASF\sam0\drivers\timer\quick_start\" />
@@ -939,6 +967,18 @@
     <Compile Include="src\ASF\sam0\drivers\i2c\i2c_master_interrupt.c">
       <SubType>compile</SubType>
     </Compile>
+    <None Include="src\ASF\sam0\drivers\spi\quick_start_slave\qs_spi_slave_basic.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\spi\quick_start_master\qs_spi_master_basic.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam0\drivers\spi\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam0\drivers\spi\spi.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\sam0\drivers\system\system_sam_b.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1018,6 +1058,9 @@
       <SubType>compile</SubType>
     </None>
     <None Include="src\config\conf_dualtimer.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\config\conf_spi.h">
       <SubType>compile</SubType>
     </None>
     <Compile Include="src\main.c">

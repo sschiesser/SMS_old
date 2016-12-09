@@ -74,6 +74,8 @@ volatile uint8_t sms_gateway_connection_flag = SMS_DEV_UNCONNECTED;
 uint8_t dbg_gpio_pin = PIN_LP_GPIO_12;
 volatile bool dbg_gpio_pin_state = false;
 
+static uint8_t buffer[SPI_BUF_LENGTH];
+
 /* ------------------ */
 /* Callback functions */
 /* ------------------ */
@@ -616,6 +618,29 @@ static void sms_int_timer2_fn(void)
     app_state = SMS_RUNNING;
 }
 
+static void configure_spi_master(void)
+{
+	struct spi_config config_spi_master;
+	struct spi_slave_inst_config slave_dev_config;
+	spi_slave_inst_get_config_defaults(&slave_dev_config);
+	slave_dev_config.ss_pin = CONF_SPI_PIN_SSN;
+	spi_attach_slave(&spi_slave, &slave_dev_config);
+	spi_get_config_defaults(&config_spi_master);
+	config_spi_master.transfer_mode = CONF_SPI_TRANSFER_MODE;
+	config_spi_master.clock_divider = 150;
+	config_spi_master.pin_number_pad[0] = CONF_SPI_PIN_SCK;
+	config_spi_master.pinmux_sel_pad[0] = CONF_SPI_MUX_SCK;
+	config_spi_master.pin_number_pad[1] = CONF_SPI_PIN_MOSI;
+	config_spi_master.pinmux_sel_pad[1] = CONF_SPI_MUX_MOSI;
+	config_spi_master.pin_number_pad[2] = PINMUX_UNUSED;
+	config_spi_master.pinmux_sel_pad[2] = PINMUX_UNUSED;
+	config_spi_master.pin_number_pad[3] = CONF_SPI_PIN_MISO;
+	config_spi_master.pinmux_sel_pad[3] = CONF_SPI_MUX_MISO;
+	spi_init(&spi_master_instance, CONF_SPI, &config_spi_master);
+	spi_send = false;
+	spi_enable(&spi_master_instance);
+}
+
 int main(void)
 {
     app_state = SMS_STARTING;
@@ -637,6 +662,8 @@ int main(void)
     sms_gpio_init();
     
     hw_timer_register_callback(timer_callback_fn);
+	
+	configure_spi_master();
 
     DBG_LOG("Initializing BLE Application");
     
@@ -715,25 +742,20 @@ int main(void)
             break;
         }
         /* Application Task */
-        //if (app_timer_done) {
-        //if(sms_gateway_connection_flag == SMS_DEV_CONNECTING) {
-        //at_ble_disconnected_t sms_connect_request_fail;
-        //sms_connect_request_fail.reason = AT_BLE_TERMINATED_BY_USER;
-        //sms_connect_request_fail.handle = ble_dev_info[0].conn_info.handle;
-        //sms_gateway_connection_flag = SMS_DEV_UNCONNECTED;
-        //if (at_ble_connect_cancel() == AT_BLE_SUCCESS) {
-        //DBG_LOG("Connection Timeout");
-        //pxp_disconnect_event_handler(&sms_connect_request_fail);
-        //} else {
-        //DBG_LOG("Unable to connect with device");
-        //}
-        //} else if(sms_gateway_connection_flag == SMS_DEV_SERVICE_FOUND) {
-        //hw_timer_start(PXP_RSSI_UPDATE_INTERVAL);
-        //}
-        //
-        //app_timer_done = false;
-        //}
+		if(spi_send) {
+			buffer[0] = spi_message.periph_id;
+			buffer[1] = spi_message.service;
+			buffer[2] = spi_message.length;
+			DBG_LOG_DEV("Sending to SPI: 0x%02x %02x %02x ", spi_message.periph_id, spi_message.service, spi_message.length);
+			for(uint8_t i = 0; i < spi_message.length; i++) {
+				buffer[i+3] = spi_message.data[i];
+				DBG_LOG_CONT_DEV("%02x", spi_message.data[i]);
+			}
+			spi_select_slave(&spi_master_instance, &spi_slave, true);
+			spi_write_buffer_wait(&spi_master_instance, buffer, SPI_BUF_LENGTH);
+			spi_select_slave(&spi_master_instance, &spi_slave, false);
+			spi_send = false;
+		}
     }
-
 }
 

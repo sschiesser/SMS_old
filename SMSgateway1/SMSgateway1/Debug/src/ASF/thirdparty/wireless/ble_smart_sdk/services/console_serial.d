@@ -106,13 +106,15 @@ src/ASF/thirdparty/wireless/ble_smart_sdk/services/console_serial.d \
  ../src/config/conf_board.h ../src/ASF/sam0/drivers/i2c/i2c_common.h \
  ../src/ASF/sam0/drivers/i2c/i2c_master_interrupt.h \
  ../src/ASF/sam0/drivers/i2c/i2c_master.h \
+ ../src/ASF/sam0/drivers/spi/spi.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h \
+ ../src/config/conf_spi.h \
  ../src/ASF/sam0/utils/stdio/stdio_serial/stdio_serial.h \
  ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/samb_uart/uart_serial.h \
  ../src/ASF/sam0/drivers/uart/uart.h \
  ../src/ASF/sam0/drivers/timer/timer.h ../src/config/conf_uart_serial.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h \
  ../src/ASF/thirdparty/wireless/ble_smart_sdk/services/console_serial.h
 
 ../src/asf.h:
@@ -333,6 +335,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/sam0/drivers/i2c/i2c_master.h:
 
+../src/ASF/sam0/drivers/spi/spi.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
+
+../src/config/conf_spi.h:
+
 ../src/ASF/sam0/utils/stdio/stdio_serial/stdio_serial.h:
 
 ../src/ASF/common/services/serial/serial.h:
@@ -344,9 +354,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/sam0/drivers/timer/timer.h:
 
 ../src/config/conf_uart_serial.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
 
 ../src/ASF/thirdparty/wireless/ble_smart_sdk/services/console_serial.h:
