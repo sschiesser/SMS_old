@@ -590,7 +590,13 @@ static void sms_int_button1_fn(void)
 
 static void sms_int_button2_fn(void)
 {
-    sms_gateway_init();
+    //sms_gateway_init();
+	buffer[0] = 4;
+	buffer[1] = 2;
+	buffer[2] = 1;
+	spi_select_slave(&spi_master_instance, &spi_slave, true);
+	spi_write_buffer_wait(&spi_master_instance, buffer, SPI_BUF_LENGTH);
+	spi_select_slave(&spi_master_instance, &spi_slave, false);
     app_state = SMS_RUNNING;
 }
 
@@ -681,7 +687,7 @@ int main(void)
     //
     //app_state = SMS_RUNNING;
 
-    sms_gateway_init();
+    //sms_gateway_init();
 
     register_hw_timer_start_func_cb((hw_timer_start_func_cb_t)hw_timer_start);
     register_hw_timer_stop_func_cb(hw_timer_stop);
