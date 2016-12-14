@@ -591,6 +591,7 @@ static void sms_int_button1_fn(void)
 static void sms_int_button2_fn(void)
 {
     //sms_gateway_init();
+	DBG_LOG_DEV("Button...");
 	buffer[0] = 4;
 	buffer[1] = 2;
 	buffer[2] = 1;
@@ -663,7 +664,7 @@ int main(void)
     //dualtimer_disable(DUALTIMER_TIMER2);
     
     /* button initialization */
-    button_init(button_cb);
+    //button_init(button_cb);
 
     sms_gpio_init();
     
@@ -701,6 +702,26 @@ int main(void)
 			periph_instance[i].service_handle_range[j][0] = 0xff;
 			periph_instance[i].service_handle_range[j][1] = 0x00;
 		}
+	}
+	
+	while(1)
+	{
+		buffer[0] = 0;
+		buffer[1] = rand() % 3;
+		buffer[2] = (buffer[1] == 0 ? 1 : (buffer[1] == 1 ? 8 : 12));
+		DBG_LOG_DEV("[0]: 0, [1]: %d, [2]: %d, [3]: ", buffer[1], buffer[2]);
+		for(uint8_t i = 0; i < buffer[2]; i++) {
+			buffer[i+3] = 2*i + 3;
+			DBG_LOG_CONT_DEV("%d ", buffer[i+3]);
+		}
+		spi_select_slave(&spi_master_instance, &spi_slave, true);
+		spi_write_buffer_wait(&spi_master_instance, buffer, SPI_BUF_LENGTH);
+		spi_select_slave(&spi_master_instance, &spi_slave, false);
+		if(!gpio_pin_get_input_level(BUTTON_0_PIN)) {
+			sms_int_button2_fn();
+		}
+		uint32_t delay = 1000000;
+		while(delay--) {};
 	}
     
     while(true)
