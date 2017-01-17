@@ -688,7 +688,7 @@ int main(void)
     //
     //app_state = SMS_RUNNING;
 
-    //sms_gateway_init();
+    sms_gateway_init();
 
     register_hw_timer_start_func_cb((hw_timer_start_func_cb_t)hw_timer_start);
     register_hw_timer_stop_func_cb(hw_timer_stop);
@@ -704,27 +704,27 @@ int main(void)
 		}
 	}
 	
-	while(1)
-	{
-		buffer[0] = 0;
-		buffer[1] = rand() % 3;
-		buffer[2] = (buffer[1] == 0 ? 1 : (buffer[1] == 1 ? 8 : 12));
-		DBG_LOG_DEV("[0]: 0, [1]: %d, [2]: %d, [3]: ", buffer[1], buffer[2]);
-		for(uint8_t i = 0; i < buffer[2]; i++) {
-			buffer[i+3] = rand() % 0xff;
-			DBG_LOG_CONT_DEV("%d ", buffer[i+3]);
-		}
-		spi_select_slave(&spi_master_instance, &spi_slave, true);
-		spi_write_buffer_wait(&spi_master_instance, buffer, SPI_BUF_LENGTH);
-		spi_select_slave(&spi_master_instance, &spi_slave, false);
-		uint32_t delay1 = 500000;
-		while(delay1--) {};
-		if(!gpio_pin_get_input_level(BUTTON_0_PIN)) {
-			sms_int_button2_fn();
-		}
-		uint32_t delay2 = 500000;
-		while(delay2--) {};
-	}
+	//while(1)
+	//{
+		//buffer[0] = 0;
+		//buffer[1] = rand() % 3;
+		//buffer[2] = (buffer[1] == 0 ? 1 : (buffer[1] == 1 ? 8 : 12));
+		//DBG_LOG_DEV("[0]: 0, [1]: %d, [2]: %d, [3]: ", buffer[1], buffer[2]);
+		//for(uint8_t i = 0; i < buffer[2]; i++) {
+			//buffer[i+3] = rand() % 0xff;
+			//DBG_LOG_CONT_DEV("%d ", buffer[i+3]);
+		//}
+		//spi_select_slave(&spi_master_instance, &spi_slave, true);
+		//spi_write_buffer_wait(&spi_master_instance, buffer, SPI_BUF_LENGTH);
+		//spi_select_slave(&spi_master_instance, &spi_slave, false);
+		//uint32_t delay1 = 500000;
+		//while(delay1--) {};
+		//if(!gpio_pin_get_input_level(BUTTON_0_PIN)) {
+			//sms_int_button2_fn();
+		//}
+		//uint32_t delay2 = 500000;
+		//while(delay2--) {};
+	//}
     
     while(true)
     {
